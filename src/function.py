@@ -10,8 +10,8 @@ import json
 def configure_s3():
     return boto3.client(
         's3',
-        aws_access_key_id='AKIATSRTY4JEELYVDAD4',
-        aws_secret_access_key='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')
+        aws_access_key_id='AKIATSRTY4JEBH22DE63',
+        aws_secret_access_key='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')
 
 
 def configure_youtube():
