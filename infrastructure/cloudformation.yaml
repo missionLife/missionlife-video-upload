@@ -51,7 +51,6 @@ Resources:
         Role: !GetAtt YoutubeUploadLambdaRole.Arn
         Runtime: nodejs8.10
         Timeout: 300
-        Tracing: Active
         Environment:
           Variables:
         Events:
