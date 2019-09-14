@@ -1,19 +1,13 @@
-const { google } = require('googleapis');
+import AWS from 'aws-sdk';
+import Promise from 'bluebird';
 
-const oauth2Client = new google.auth.OAuth2(
-    '495680661684-q8rfi6p1e3l9smnqlhsmf6sdvmh01l48.apps.googleusercontent.com',
-    'jl6NBWKs4XjANxJN65T9YSLw',
-    'http://localhost:8080'
-);
+AWS.config.setPromisesDependency(Promise);
+AWS.config.update({region: process.env.AWS_REGION});
 
-oauth2Client.setCredentials({
-    refresh_token: `1/G_lniDMwtZdDpOBExOcCOIxF1QAfOWvcqKSDRX_uanY`
-});
-
-
-const youtube = google.youtube({
-    version: 'v3',
-    auth: oauth2Client
-});
-
-youtube.playlists.list({ part: '', mine: true });
+exports.handler = async (event, context) => {
+    try {
+        return await consume(event,context);
+    } catch (error) {
+        throw new Error(`An error occurred in the Youtube Upload Lambda: ${error.message}`);
+    }
+};

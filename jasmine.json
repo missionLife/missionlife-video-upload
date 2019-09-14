@@ -1,0 +1,6 @@
+{
+    "spec_dir": "./dist/cjs",
+    "spec_files": [
+        "**/*.spec.js"
+    ]
+}

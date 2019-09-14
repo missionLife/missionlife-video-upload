@@ -1,0 +1,36 @@
+pipeline:
+
+  install:
+    image: node:10
+    commands:
+      - npm install
+    secrets: [ npm_token ]
+
+  test:
+    image: node:10
+    commands:
+      - npm test
+
+  build:
+    image: meltwaterfoundation/drone-serverless:1.41.1
+    commands:
+      - npm run build
+    secrets:
+      - aws_account_id
+      - aws_access_key_id
+      - aws_secret_access_key
+    when:
+      event: [ push ]
+      branch: [ master ]
+
+  deploy:
+    image: meltwaterfoundation/drone-serverless:1.41.1
+    commands:
+      - npm run deploy
+    secrets:
+      - aws_account_id
+      - aws_access_key_id
+      - aws_secret_access_key
+    when:
+      event: [ push ]
+      branch: [ master ]

@@ -1,0 +1,3 @@
+{
+    "MISSION_LIFE_VIDEOS_S3_BUCKET_ARN": "arn:aws:s3:::mission-life-videos"
+}
