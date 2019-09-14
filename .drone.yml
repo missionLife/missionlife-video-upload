@@ -31,6 +31,8 @@ pipeline:
       - aws_account_id
       - aws_access_key_id
       - aws_secret_access_key
+      - google_client_id
+      - google_client_secret
     when:
       event: [ push ]
       branch: [ master ]

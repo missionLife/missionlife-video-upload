@@ -10,7 +10,9 @@ npm i
 npm run transpile -- --ignore spec.js
 
 echo "Preparing infrastructure code for AWS account"
-cat ./infrastructure/config.json | node_modules/mustache/bin/mustache - ./infrastructure/cloudformation.yaml > ./dist/cloudformation.yaml
+echo "{\"GOOGLE_CLIENT_ID\":\"${GOOGLE_CLIENT_ID}\",
+       \"GOOGLE_CLIENT_SECRET\":\"${GOOGLE_CLIENT_SECRET}\"}" | mustache - ./infrastructure/config.json > ./dist/config.json
+cat ./dist/config.json | node_modules/mustache/bin/mustache - ./infrastructure/cloudformation.yaml > ./dist/cloudformation.yaml
 
 echo "Preparing production dependencies"
 rm -rf ./node_modules
