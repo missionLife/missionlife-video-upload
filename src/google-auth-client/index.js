@@ -85,7 +85,7 @@ export default class GoogleAuthClient {
                 })
                 .listen(8080, () => {
                     // open the browser to the authorize url to start the workflow
-                    opn(this.authorizeUrl, {
+                    open(this.authorizeUrl, {
                         wait: false
                     }).then(cp => cp.unref());
                 });
