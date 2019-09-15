@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+noChangesToDeployString="No changes to deploy"
+didntContainChangesString="The submitted information didn't contain changes"
+
+STDERR=$("$@" 2>&1) || {
+    ERROR_CODE=$?
+    echo "Possible Error:|||$STDERR|||"
+
+    if [[ "${ERROR_CODE}" -eq "255" ]]; then
+        echo "Matched Error Code...";
+        echo "Checking for matches of [ \"${noChangesToDeployString}\", \"${didntContainChangesString}\" ]";
+        if [[ "${STDERR}" == *${noChangesToDeployString}*  ]]; then
+            echo "Nothing to deploy. Continuing safely...";
+            exit 0;
+        fi
+        if [[ "${STDERR}" == *${didntContainChangesString}*  ]]; then
+            echo "Didn't contain changes. Continuing safely...";
+            exit 0;
+        fi
+    fi
+
+    exit ${ERROR_CODE}
+}

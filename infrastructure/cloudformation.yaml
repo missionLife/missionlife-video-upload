@@ -1,0 +1,72 @@
+---
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: Lambda for Uploading Videos to Youtube
+Resources:
+
+  YoutubeUploadLambdaRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: "YoutubeUploadLambdaRole"
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+        - Effect: Allow
+          Principal:
+            Service: lambda.amazonaws.com
+          Action:
+          - sts:AssumeRole
+      Path: '/'
+      Policies:
+      - PolicyName: logs
+        PolicyDocument:
+          Statement:
+          - Effect: Allow
+            Action:
+            - logs:*
+            Resource: arn:aws:logs:*:*:*
+      - PolicyName: s3Access
+        PolicyDocument:
+          Statement:
+          - Effect: Allow
+            Action:
+            - s3:*
+            Resource: "*"
+      - PolicyName: tracing
+        PolicyDocument:
+          Version: '2012-10-17'
+          Statement:
+          - Effect: Allow
+            Action:
+            - xray:PutTraceSegments
+            - xray:PutTelemetryRecords
+            Resource: "*"
+  YoutubeUploadLambda:
+      Type: AWS::Serverless::Function
+      Properties:
+        CodeUri: ../dist/youtube-upload.zip
+        FunctionName: YoutubeUploadLambda
+        Handler: index.handler
+        MemorySize: 128
+        Role: !GetAtt YoutubeUploadLambdaRole.Arn
+        Runtime: nodejs8.10
+        Timeout: 300
+        Environment:
+          Variables:
+            GOOGLE_CLIENT_ID: {{{GOOGLE_CLIENT_ID}}}
+            GOOGLE_CLIENT_SECRET: {{{GOOGLE_CLIENT_SECRET}}}
+        Events:
+          UploadEvent:
+            Type: S3
+            Properties:
+              Bucket: {{{MISSION_LIFE_VIDEOS_S3_BUCKET_ARN}}}
+              Events: s3:ObjectCreated:*
+
+  MatchedVisitsConsumerLambdaLogGroup:
+    Type: AWS::Logs::LogGroup
+    Properties:
+      RetentionInDays: 14
+      LogGroupName: !Join
+        - ''
+        - - '/aws/lambda/'
+          - !Ref YoutubeUploadLambda

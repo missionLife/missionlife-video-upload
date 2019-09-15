@@ -1,0 +1,40 @@
+{
+  "name": "missionlife-video-upload",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/index.js",
+  "scripts": {
+    "build": "scripts/build",
+    "clean": "rm -rf coverage/ dist/",
+    "deploy": "scripts/deploy",
+    "postinstall": "if [ -z \"$npm_config_production\" ]; then npm outdated; exit 0; fi",
+    "postversion": "git push --follow-tags",
+    "test": "npm run transpile && JASMINE_CONFIG_PATH=jasmine.json jasmine",
+    "transpile": "npm run clean && babel src --out-dir dist/cjs --copy-files"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://missionLife:g32PcG8k4t4rf8nc.*Cr_U_R@github.com/missionLife/missionlife-video-upload.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/missionLife/missionlife-video-upload/issues"
+  },
+  "homepage": "https://github.com/missionLife/missionlife-video-upload#readme",
+  "devDependencies": {
+    "@babel/cli": "7.5.5",
+    "@babel/core": "7.5.5",
+    "@babel/preset-env": "7.5.5",
+    "jasmine": "3.4.0",
+    "mustache": "3.0.2"
+  },
+  "dependencies": {
+    "aws-sdk": "2.528.0",
+    "bluebird": "3.5.5",
+    "google-auth-library": "^5.2.1",
+    "googleapis": "43.0.0",
+    "server-destroy": "1.0.1"
+  }
+}

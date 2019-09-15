@@ -1,0 +1,5 @@
+{
+    "MISSION_LIFE_VIDEOS_S3_BUCKET_ARN": "arn:aws:s3:::mission-life-videos",
+    "GOOGLE_CLIENT_SECRET": "{{{GOOGLE_CLIENT_SECRET}}}",
+    "GOOGLE_CLIENT_ID": "{{{GOOGLE_CLIENT_ID}}}",
+}
