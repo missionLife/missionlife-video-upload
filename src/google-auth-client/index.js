@@ -98,10 +98,13 @@ export default class GoogleAuthClient {
                             executablePath: await chrome.executablePath,
                             headless: chrome.headless,
                         });
+                        console.log('got here 2.3 - browser', browser)
                         const page = await browser.newPage();
+                        console.log('got here 2.4 - page', page)
                         await page.goto(this.authorizeUrl);
+                        console.log('got here 2.5')
                         await browser.close();
-                        destroyer(server);
+                        console.log('got here 2.6');
                     } catch (error) {
                         console.log(`there was an error opening the broswer! - Error: ${error.message}`);
                         throw new Error(error.message);
@@ -113,7 +116,7 @@ export default class GoogleAuthClient {
             }
             console.log('the server', server);
             console.log('the server type', typeof server);
-
+            destroyer(server);
         });
     }
 }
