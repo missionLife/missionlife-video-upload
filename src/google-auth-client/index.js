@@ -88,7 +88,7 @@ export default class GoogleAuthClient {
                 .listen(3000, () => {
                     // open the browser to the authorize url to start the workflow
                     console.log('got here 2.2', this.authorizeUrl)
-                    open(this.authorizeUrl, {
+                    return open(this.authorizeUrl, {
                         wait: false
                     }).then(cp => {
                         console.log('got here 2.3')
