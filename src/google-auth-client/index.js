@@ -1,4 +1,4 @@
-import http from 'http';
+import * as http from 'http';
 import url from "url";
 import open from 'open';
 import destroyer from 'server-destroy';
