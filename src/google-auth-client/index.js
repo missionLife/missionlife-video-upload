@@ -1,6 +1,5 @@
 import http from 'http';
 import url from "url";
-import open from 'open';
 import destroyer from 'server-destroy';
 import fs from 'fs';
 import path from 'path';
