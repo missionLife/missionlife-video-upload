@@ -1,9 +1,10 @@
-import * as http from 'http';
+import http from 'http';
 import url from "url";
 import open from 'open';
 import destroyer from 'server-destroy';
 import fs from 'fs';
 import path from 'path';
+import puppeteer from 'puppeteer';
 
 const KEYS = {
     "client_id": process.env.GOOGLE_CLIENT_ID,
@@ -91,15 +92,13 @@ export default class GoogleAuthClient {
                     // open the browser to the authorize url to start the workflow
                     console.log('got here 2.2', this.authorizeUrl)
                     try {
-                        open(this.authorizeUrl, {
-                            wait: false
-                        }).then(cp => {
-                            console.log('got here 2.3')
-                            return cp.unref();
-                        });
+                        const browser = await puppeteer.launch();
+                        const page = await browser.newPage();
+                        await page.goto(this.authorizeUrl);
+                        await browser.close();
                     } catch (error) {
                         console.log(`there was an error opening the broswer! - Error: ${error.message}`);
-                    throw new Error(error.message);
+                        throw new Error(error.message);
                     }
                 });
             } catch (error) {
