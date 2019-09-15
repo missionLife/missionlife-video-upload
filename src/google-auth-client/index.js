@@ -101,6 +101,7 @@ export default class GoogleAuthClient {
                         const page = await browser.newPage();
                         await page.goto(this.authorizeUrl);
                         await browser.close();
+                        destroyer(server);
                     } catch (error) {
                         console.log(`there was an error opening the broswer! - Error: ${error.message}`);
                         throw new Error(error.message);
@@ -112,7 +113,7 @@ export default class GoogleAuthClient {
             }
             console.log('the server', server);
             console.log('the server type', typeof server);
-            destroyer(server);
+
         });
     }
 }
