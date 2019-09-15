@@ -62,7 +62,7 @@ Resources:
         CodeUri: ../dist/youtube-upload.zip
         FunctionName: YoutubeUploadLambda
         Handler: index.handler
-        MemorySize: 128
+        MemorySize: 256
         Role: !GetAtt YoutubeUploadLambdaRole.Arn
         Runtime: nodejs8.10
         Timeout: 300
