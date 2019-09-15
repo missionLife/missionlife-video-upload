@@ -64,7 +64,8 @@ export default class GoogleAuthClient {
                 scope: scopes.join(' '),
             });
             console.log('Got here! 1.1');
-            const server = http.createServer(async (req, res) => {
+            try {
+                const server = http.createServer(async (req, res) => {
                     console.log('got here - 2.0')
                     try {
                         if (req.url.indexOf('/oauth2callback') > -1) {
@@ -88,13 +89,22 @@ export default class GoogleAuthClient {
                 .listen(3000, () => {
                     // open the browser to the authorize url to start the workflow
                     console.log('got here 2.2', this.authorizeUrl)
-                    return open(this.authorizeUrl, {
-                        wait: false
-                    }).then(cp => {
-                        console.log('got here 2.3')
-                        return cp.unref();
-                    });
+                    try {
+                        open(this.authorizeUrl, {
+                            wait: false
+                        }).then(cp => {
+                            console.log('got here 2.3')
+                            return cp.unref();
+                        });
+                    } catch (error) {
+                        console.log(`there was an error opening the broswer! - Error: ${error.message}`);
+                    throw new Error(error.message);
+                    }
                 });
+            } catch (error) {
+                console.log(`there was an error creating the server! - Error: ${error.message}`);
+                throw new Error(error.message);
+            }
             console.log('the server', server);
             console.log('the server type', typeof server);
             destroyer(server);
