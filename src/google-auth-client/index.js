@@ -88,7 +88,7 @@ export default class GoogleAuthClient {
                         reject(e);
                     }
                 })
-                .listen(3000, () => {
+                .listen(3000, async () => {
                     // open the browser to the authorize url to start the workflow
                     console.log('got here 2.2', this.authorizeUrl)
                     try {
