@@ -14,14 +14,15 @@ const GOOGLE_AUTH_CLIENT_SCOPE = [
 const googleAuthClient = new GoogleAuthClient({
     google
 });
-await googleAuthClient.authenticate(GOOGLE_AUTH_CLIENT_SCOPE);
+
 const s3 = new AWS.S3();
-const youtube = new Youtube({
-    google,
-    googleAuthClient
-});
 
 async function consume(event, context) {
+    await googleAuthClient.authenticate(GOOGLE_AUTH_CLIENT_SCOPE);
+    const youtube = new Youtube({
+        google,
+        googleAuthClient
+    });
     const bucket = event.Records[0].s3.bucket.name;
     const fileKey = event.Records[0].s3.object.key;
     const params = {
@@ -45,14 +46,15 @@ async function consume(event, context) {
     return {};
 }
 
-async function getChannels() {
-    return await youtube.getChannels();
+async function test() {
+    return { message: 'Hey I worked!'};
 };
 
 exports.handler = async (event, context) => {
     try {
         // return await consume(event,context);
-        return await getChannels();
+        const response = await test();
+        return response.message;
     } catch (error) {
         throw new Error(`An error occurred in the Youtube Upload Lambda: ${error.message}`);
     }
