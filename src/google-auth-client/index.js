@@ -91,7 +91,10 @@ export default class GoogleAuthClient {
                     console.log('got here 2.2')
                     open(this.authorizeUrl, {
                         wait: false
-                    }).then(cp => cp.unref());
+                    }).then(cp => {
+                        console.log('got here 2.3')
+                        return cp.unref();
+                    });
                 });
             destroyer(server);
         });
