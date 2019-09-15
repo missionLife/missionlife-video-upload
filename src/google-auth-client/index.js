@@ -63,8 +63,8 @@ export default class GoogleAuthClient {
                 access_type: 'offline',
                 scope: scopes.join(' '),
             });
-            const server = http
-                .createServer(async (req, res) => {
+            console.log('Got here! 1.1');
+            const server = http.createServer(async (req, res) => {
                     console.log('got here - 2.0')
                     try {
                         if (req.url.indexOf('/oauth2callback') > -1) {
