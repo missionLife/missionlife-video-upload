@@ -12,15 +12,15 @@ const KEYS = {
     "token_uri": "https://oauth2.googleapis.com/token",
     "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
     "client_secret": process.env.GOOGLE_CLIENT_SECRET,
-    "javascript_origins": ["http://localhost:8080"],
-    "redirect_uris": ['http://localhost:8080/oauth2callback'],
+    "javascript_origins": ["http://localhost:3000"],
+    "redirect_uris": ['http://localhost:3000/oauth2callback'],
 };
 const INVALID_REDIRECT_URI = `The provided keyfile does not define a valid
 redirect URI. There must be at least one redirect URI defined, and this sample
-assumes it redirects to 'http://localhost:8080/oauth2callback'.  Please edit
+assumes it redirects to 'http://localhost:3000/oauth2callback'.  Please edit
 your keyfile, and add a 'redirect_uris' section.  For example:
 "redirect_uris": [
-  "http://localhost:8080/oauth2callback"
+  "http://localhost:3000/oauth2callback"
 ]
 `;
 
@@ -36,7 +36,7 @@ export default class GoogleAuthClient {
         const parts = new url.URL(redirectUri);
         if (
             redirectUri.length === 0 ||
-            parts.port !== '8080' ||
+            parts.port !== '3000' ||
             parts.hostname !== 'localhost' ||
             parts.pathname !== '/oauth2callback'
         ) {
@@ -69,7 +69,7 @@ export default class GoogleAuthClient {
                     console.log('got here - 2.0')
                     try {
                         if (req.url.indexOf('/oauth2callback') > -1) {
-                            const qs = new url.URL(req.url, 'http://localhost:8080')
+                            const qs = new url.URL(req.url, 'http://localhost:3000')
                                 .searchParams;
                             res.end(
                                 'Authentication successful! Please return to the console.'
@@ -86,7 +86,7 @@ export default class GoogleAuthClient {
                         reject(e);
                     }
                 })
-                .listen(8080, () => {
+                .listen(3000, () => {
                     // open the browser to the authorize url to start the workflow
                     console.log('got here 2.2')
                     open(this.authorizeUrl, {
