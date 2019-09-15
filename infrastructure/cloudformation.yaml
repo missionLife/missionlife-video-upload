@@ -77,7 +77,7 @@ Resources:
               Bucket: !Ref YoutubeUploadBucket
               Events: s3:ObjectCreated:*
 
-  MatchedVisitsConsumerLambdaLogGroup:
+  YoutubeUploadLambdaLogGroup:
     Type: AWS::Logs::LogGroup
     Properties:
       RetentionInDays: 14
