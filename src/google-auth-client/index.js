@@ -3,7 +3,9 @@ import url from "url";
 import destroyer from 'server-destroy';
 import fs from 'fs';
 import path from 'path';
-import puppeteer from 'puppeteer';
+import puppeteer from 'puppeteer-core';
+import chrome from 'chrome-aws-lambda';
+
 
 const KEYS = {
     "client_id": process.env.GOOGLE_CLIENT_ID,
@@ -91,7 +93,11 @@ export default class GoogleAuthClient {
                     // open the browser to the authorize url to start the workflow
                     console.log('got here 2.2', this.authorizeUrl)
                     try {
-                        const browser = await puppeteer.launch();
+                        const browser = await puppeteer.launch({
+                            args: chrome.args,
+                            executablePath: await chrome.executablePath,
+                            headless: chrome.headless,
+                        });
                         const page = await browser.newPage();
                         await page.goto(this.authorizeUrl);
                         await browser.close();
