@@ -26,7 +26,6 @@ your keyfile, and add a 'redirect_uris' section.  For example:
 
 export default class GoogleAuthClient {
     constructor({ google }) {
-        console.log('BEFORE GOOGLE: ', typeof google);
         this.google = google;
 
         // validate the redirectUri.  This is a frequent cause of confusion.
@@ -57,12 +56,14 @@ export default class GoogleAuthClient {
     // simple example, the only request to our webserver is to
     // /oauth2callback?code=<code>
     async authenticate(scopes) {
+        console.log('Got here! 1');
         return new Promise((resolve, reject) => {
             // grab the url that will be used for authorization
             this.authorizeUrl = this.oAuth2Client.generateAuthUrl({
                 access_type: 'offline',
                 scope: scopes.join(' '),
             });
+            console.log('authorizeUrl: ', this.authorizeUrl);
             const server = http
                 .createServer(async (req, res) => {
                     try {
@@ -76,6 +77,7 @@ export default class GoogleAuthClient {
                             const {
                                 tokens
                             } = await this.oAuth2Client.getToken(qs.get('code'));
+                            console.log('got here - 2')
                             this.oAuth2Client.credentials = tokens;
                             resolve(this.oAuth2Client);
                         }

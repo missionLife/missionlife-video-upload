@@ -19,10 +19,12 @@ const s3 = new AWS.S3();
 
 async function consume(event, context) {
     await googleAuthClient.authenticate(GOOGLE_AUTH_CLIENT_SCOPE);
+    console.log('got here - 3')
     const youtube = new Youtube({
         google,
         googleAuthClient
     });
+    console.log('got here - 4');
     const bucket = event.Records[0].s3.bucket.name;
     const fileKey = event.Records[0].s3.object.key;
     const params = {
@@ -31,13 +33,13 @@ async function consume(event, context) {
     };
 
     let video;
-
+    console.log('params - ', params);
     try {
         video = await s3.getObject(params).promise();
     } catch(error) {
         throw new Error(`An error occurred while downloading data from S3 in the Youtube Uploader Lambda: ${error.message}`);
     }
-
+    console.log('got here - 6');
     try {
         await youtube.upload(video)
     } catch (error) {
