@@ -63,7 +63,6 @@ export default class GoogleAuthClient {
                 access_type: 'offline',
                 scope: scopes.join(' '),
             });
-            console.log('authorizeUrl: ', this.authorizeUrl);
             const server = http
                 .createServer(async (req, res) => {
                     console.log('got here - 2.0')
@@ -88,7 +87,7 @@ export default class GoogleAuthClient {
                 })
                 .listen(3000, () => {
                     // open the browser to the authorize url to start the workflow
-                    console.log('got here 2.2')
+                    console.log('got here 2.2', this.authorizeUrl)
                     open(this.authorizeUrl, {
                         wait: false
                     }).then(cp => {
