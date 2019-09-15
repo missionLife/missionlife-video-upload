@@ -1,9 +1,7 @@
 #!/usr/bin/env bash
 set -e # Exit on any child process error
 
-source ./scripts/setup_env
-
-export AWS_DEFAULT_REGION=eu-west-1
+export AWS_DEFAULT_REGION=us-east-2
 export STACK_NAME=youtube-upload-v1
 
 echo "Current Building Environment is: $DRONE_BRANCH"
