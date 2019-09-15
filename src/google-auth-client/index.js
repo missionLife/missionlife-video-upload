@@ -66,6 +66,7 @@ export default class GoogleAuthClient {
             console.log('authorizeUrl: ', this.authorizeUrl);
             const server = http
                 .createServer(async (req, res) => {
+                    console.log('got here - 2.0')
                     try {
                         if (req.url.indexOf('/oauth2callback') > -1) {
                             const qs = new url.URL(req.url, 'http://localhost:8080')
@@ -77,7 +78,7 @@ export default class GoogleAuthClient {
                             const {
                                 tokens
                             } = await this.oAuth2Client.getToken(qs.get('code'));
-                            console.log('got here - 2')
+                            console.log('got here - 2.1')
                             this.oAuth2Client.credentials = tokens;
                             resolve(this.oAuth2Client);
                         }
@@ -87,6 +88,7 @@ export default class GoogleAuthClient {
                 })
                 .listen(8080, () => {
                     // open the browser to the authorize url to start the workflow
+                    console.log('got here 2.2')
                     open(this.authorizeUrl, {
                         wait: false
                     }).then(cp => cp.unref());
