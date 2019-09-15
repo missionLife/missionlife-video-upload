@@ -33,9 +33,7 @@
   "dependencies": {
     "aws-sdk": "2.528.0",
     "bluebird": "3.5.5",
-    "google-auth-library": "^5.2.1",
     "googleapis": "43.0.0",
-    "open": "6.4.0",
     "puppeteer": "1.20.0",
     "server-destroy": "1.0.1"
   }
