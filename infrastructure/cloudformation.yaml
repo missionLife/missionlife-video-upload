@@ -4,6 +4,21 @@ Transform: AWS::Serverless-2016-10-31
 Description: Lambda for Uploading Videos to Youtube
 Resources:
 
+  YoutubeUploadBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: mission-life-youtube-upload-master
+      AccessControl: PublicRead
+      CorsConfiguration:
+        CorsRules:
+          - AllowedHeaders:
+              - "*"
+            AllowedMethods:
+              - GET
+            AllowedOrigins:
+              - "*"
+            MaxAge: 900
+
   YoutubeUploadLambdaRole:
     Type: AWS::IAM::Role
     Properties:
@@ -25,7 +40,7 @@ Resources:
             Action:
             - logs:*
             Resource: arn:aws:logs:*:*:*
-      - PolicyName: s3Access
+      - PolicyName: s3
         PolicyDocument:
           Statement:
           - Effect: Allow
@@ -59,7 +74,7 @@ Resources:
           UploadEvent:
             Type: S3
             Properties:
-              Bucket: {{{MISSION_LIFE_VIDEOS_S3_BUCKET_ARN}}}
+              Bucket: !Ref YoutubeUploadBucket
               Events: s3:ObjectCreated:*
 
   MatchedVisitsConsumerLambdaLogGroup:
