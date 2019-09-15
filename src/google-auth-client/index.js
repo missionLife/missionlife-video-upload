@@ -26,6 +26,7 @@ your keyfile, and add a 'redirect_uris' section.  For example:
 
 export default class GoogleAuthClient {
     constructor({ google }) {
+        console.log('BEFORE GOOGLE: ', typeof google);
         this.google = google;
 
         // validate the redirectUri.  This is a frequent cause of confusion.
@@ -44,6 +45,7 @@ export default class GoogleAuthClient {
         }
 
         // create an oAuth client to authorize the API call
+        console.log('GOOGLE: ', typeof this.google);
         this.oAuth2Client = new this.google.auth.OAuth2(
             KEYS.client_id,
             KEYS.client_secret,
