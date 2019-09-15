@@ -54,6 +54,7 @@ exports.handler = async (event, context) => {
     try {
         // return await consume(event,context);
         const response = await test();
+        console.log('the message: ', response.message)
         return response.message;
     } catch (error) {
         throw new Error(`An error occurred in the Youtube Upload Lambda: ${error.message}`);
