@@ -96,6 +96,8 @@ export default class GoogleAuthClient {
                         return cp.unref();
                     });
                 });
+            console.log('the server', server);
+            console.log('the server type', typeof server);
             destroyer(server);
         });
     }
