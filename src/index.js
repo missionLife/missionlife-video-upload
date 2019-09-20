@@ -7,10 +7,7 @@ import { google } from 'googleapis';
 AWS.config.setPromisesDependency(Promise);
 AWS.config.update({region: process.env.AWS_REGION});
 
-const GOOGLE_AUTH_CLIENT_SCOPE = [
-    'https://www.googleapis.com/auth/youtube.upload',
-    'https://www.googleapis.com/auth/youtube.readonly'
-];
+
 const googleAuthClient = new GoogleAuthClient({
     google
 });
@@ -18,7 +15,6 @@ const googleAuthClient = new GoogleAuthClient({
 const s3 = new AWS.S3();
 
 async function consume(event, context) {
-    await googleAuthClient.authenticate(GOOGLE_AUTH_CLIENT_SCOPE);
     console.log('got here - 3')
     const youtube = new Youtube({
         google,

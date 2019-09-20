@@ -1,12 +1,3 @@
-import http from 'http';
-import url from "url";
-import destroyer from 'server-destroy';
-import fs from 'fs';
-import path from 'path';
-import puppeteer from 'puppeteer-core';
-import chrome from 'chrome-aws-lambda';
-
-
 const KEYS = {
     "client_id": process.env.GOOGLE_CLIENT_ID,
     "project_id": "video-messaging",
@@ -26,6 +17,10 @@ your keyfile, and add a 'redirect_uris' section.  For example:
 ]
 `;
 
+const GOOGLE_AUTH_CLIENT_SCOPE = [
+    'https://www.googleapis.com/auth/youtube.upload',
+    'https://www.googleapis.com/auth/youtube.readonly'
+];
 export default class GoogleAuthClient {
     constructor({ google }) {
         this.google = google;
@@ -46,77 +41,18 @@ export default class GoogleAuthClient {
         }
 
         // create an oAuth client to authorize the API call
-        console.log('GOOGLE: ', typeof this.google);
         this.oAuth2Client = new this.google.auth.OAuth2(
             KEYS.client_id,
             KEYS.client_secret,
             redirectUri
         );
-    }
-
-    // Open an http server to accept the oauth callback. In this
-    // simple example, the only request to our webserver is to
-    // /oauth2callback?code=<code>
-    async authenticate(scopes) {
-        console.log('Got here! 1');
-        return new Promise((resolve, reject) => {
-            // grab the url that will be used for authorization
-            this.authorizeUrl = this.oAuth2Client.generateAuthUrl({
-                access_type: 'offline',
-                scope: scopes.join(' '),
-            });
-            console.log('Got here! 1.1');
-            let server;
-            try {
-                server = http.createServer(async (req, res) => {
-                    console.log('got here - 2.0')
-                    try {
-                        if (req.url.indexOf('/oauth2callback') > -1) {
-                            const qs = new url.URL(req.url, 'http://localhost:3000')
-                                .searchParams;
-                            res.end(
-                                'Authentication successful! Please return to the console.'
-                            );
-                            server.destroy();
-                            const {
-                                tokens
-                            } = await this.oAuth2Client.getToken(qs.get('code'));
-                            console.log('got here - 2.1')
-                            this.oAuth2Client.credentials = tokens;
-                            resolve(this.oAuth2Client);
-                        }
-                    } catch (e) {
-                        reject(e);
-                    }
-                })
-                .listen(3000, async () => {
-                    // open the browser to the authorize url to start the workflow
-                    console.log('got here 2.2', this.authorizeUrl)
-                    try {
-                        const browser = await puppeteer.launch({
-                            args: chrome.args,
-                            executablePath: await chrome.executablePath,
-                            headless: chrome.headless,
-                        });
-                        console.log('got here 2.3 - browser', browser)
-                        const page = await browser.newPage();
-                        console.log('got here 2.4 - page', page)
-                        await page.goto(this.authorizeUrl);
-                        console.log('got here 2.5')
-                        await browser.close();
-                        console.log('got here 2.6');
-                    } catch (error) {
-                        console.log(`there was an error opening the broswer! - Error: ${error.message}`);
-                        throw new Error(error.message);
-                    }
-                });
-            } catch (error) {
-                console.log(`there was an error creating the server! - Error: ${error.message}`);
-                throw new Error(error.message);
-            }
-            console.log('the server', server);
-            console.log('the server type', typeof server);
-            // destroyer(server);
+        console.log('got here 2');
+        this.authorizeUrl = this.oAuth2Client.generateAuthUrl({
+            'scope': GOOGLE_AUTH_CLIENT_SCOPE,
+            'access_type':'offline',
+            'approval_prompt':'force',
+            'response_type':'code'
         });
+        console.log('The Authorization URL: ', this.authorizeUrl);
     }
 }
