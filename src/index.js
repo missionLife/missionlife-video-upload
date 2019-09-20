@@ -15,7 +15,7 @@ const googleAuthClient = new GoogleAuthClient({
 const s3 = new AWS.S3();
 
 async function consume(event, context) {
-    console.log('got here - 3')
+    console.log('got here - 3 EVENT: ', event);
     const youtube = new Youtube({
         google,
         googleAuthClient
