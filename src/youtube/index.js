@@ -16,7 +16,8 @@ export default class Youtube {
 
     async upload(videoData) {
         console.log('videoData - ', videoData);
-        const videoBufferString = videoData.Body.toString();
+        const videoBufferString = Buffer.from(videoData.Body.toString());
+        console.log('buffer string: ', videoBufferString);
         const fileSize = fs.statSync(videoBufferString).size;
         console.log('Video Size: ', fileSize);
         const res = await youtube.videos.insert({
