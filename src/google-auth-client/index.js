@@ -53,6 +53,6 @@ export default class GoogleAuthClient {
             'approval_prompt':'force',
             'response_type':'code'
         });
-        console.log('The Authorization URL: ', this.authorizeUrl);
+        console.log('The Authorization URL or Code: ', this.authorizeUrl);
     }
 }
