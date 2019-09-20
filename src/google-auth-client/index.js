@@ -40,14 +40,14 @@ export default class GoogleAuthClient {
         ) {
             throw new Error(INVALID_REDIRECT_URI);
         }
-
+        console.log('the redirect uri', redirectUri);
         // create an oAuth client to authorize the API call
         this.oAuth2Client = new this.google.auth.OAuth2(
             KEYS.client_id,
             KEYS.client_secret,
             redirectUri
         );
-        console.log('got here 2');
+        
         this.authorizeUrl = this.oAuth2Client.generateAuthUrl({
             'scope': GOOGLE_AUTH_CLIENT_SCOPE,
             'access_type':'offline',
