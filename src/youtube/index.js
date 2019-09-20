@@ -15,8 +15,8 @@ export default class Youtube {
     }
 
     async upload(videoData) {
-        console.log('videoData: ', videoData);
-        const fileSize = fs.statSync(videoData.body).size;
+        console.log('videoData - ', videoData);
+        const fileSize = fs.statSync(videoData.Body).size;
         console.log('Video Size: ', fileSize);
         const res = await youtube.videos.insert({
             part: 'id,snippet,status',
@@ -31,7 +31,7 @@ export default class Youtube {
                 },
             },
             media: {
-                body: fs.createReadStream(videoData.body),
+                body: fs.createReadStream(videoData.Body),
             },
         }, {
             // Use the `onUploadProgress` event from Axios to track the
