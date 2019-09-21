@@ -60,7 +60,10 @@ export default class GoogleAuthClient {
             'response_type':'code'
         });
         console.log('The Authorization URL or Code: ', this.authorizeUrl);
-        const server = http
+    }
+
+    async authenticate() {
+        http
             .createServer(async (req, res) => {
                 try {
                     if (req.url.indexOf('/oauth2callback') > -1) {
@@ -86,9 +89,8 @@ export default class GoogleAuthClient {
             .listen(3000, () => {
                 // open the browser to the authorize url to start the workflow
                 console.log('The Authorization URL or Code 2: ', this.authorizeUrl);
-                fetch(this.authorizeUrl).then(res => res.json()).then(res => console.log('got here: res', res));
+                fetch(this.authorizeUrl).then(res => res.text()).then(res => console.log('got here: res', res));
             });
-            console.log('destroying the server');
-    //   destroyer(server);
     }
+    
 }
