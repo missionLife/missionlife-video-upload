@@ -5,14 +5,14 @@ npm run clean
 
 mkdir -p dist/cjs
 
-npm i
+npm i -g mustache
 
 echo "Preparing infrastructure code for AWS account"
 echo "{\"GOOGLE_CLIENT_ID\":\"${GOOGLE_CLIENT_ID}\",
        \"GOOGLE_CLIENT_SECRET\":\"${GOOGLE_CLIENT_SECRET}\",
        \"AWS_ACCESS_KEY_ID\":\"${AWS_ACCESS_KEY_ID}\",
        \"AWS_SECRET_ACCESS_KEY\":\"${AWS_SECRET_ACCESS_KEY}\"}" | mustache - ./infrastructure/config.json > ./dist/config.json
-cat ./dist/config.json | node_modules/mustache/bin/mustache - ./infrastructure/cloudformation.yaml > ./dist/cloudformation.yaml
+cat ./dist/config.json | mustache - ./infrastructure/cloudformation.yaml > ./dist/cloudformation.yaml
 
 echo "Copying Code to Dist"
 cp ./src/function.py ./dist/cjs/youtube-upload.py
