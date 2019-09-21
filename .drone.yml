@@ -15,6 +15,7 @@ pipeline:
       - aws_secret_access_key
       - google_client_id
       - google_client_secret
+      - google_refresh_token
     when:
       event: [ push ]
       branch: [ master ]
@@ -23,12 +24,6 @@ pipeline:
     image: meltwaterfoundation/drone-boto3
     commands:
       - ./scripts/build-python
-    secrets:
-      - aws_access_key_id
-      - aws_secret_access_key
-      - google_client_id
-      - google_client_secret
-      - google_refresh_token
     when:
       event: [ push ]
       branch: [ master ]
