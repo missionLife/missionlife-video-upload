@@ -12,7 +12,7 @@ echo "{\"GOOGLE_CLIENT_ID\":\"${GOOGLE_CLIENT_ID}\",
        \"GOOGLE_CLIENT_SECRET\":\"${GOOGLE_CLIENT_SECRET}\"}" | mustache - ./infrastructure/config.json > ./dist/config.json
 cat ./dist/config.json | node_modules/mustache/bin/mustache - ./infrastructure/cloudformation.yaml > ./dist/cloudformation.yaml
 
-cp old-lambda/src/function.py ./dist/cjs/youtube-upload.py
+cp ./src/function.py ./dist/cjs/youtube-upload.py
 
 echo "Packaging code"
 pushd dist/cjs
