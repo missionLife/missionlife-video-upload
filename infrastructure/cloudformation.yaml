@@ -11,16 +11,16 @@ Resources:
       AccessControl: Private
       CorsConfiguration:
         CorsRules:
-          CorsRule:
-            AllowedHeaders: 
-              - "*"
-            AllowedMethods: 
-              - PUT
-              - POST
-            AllowedOrigins: 
-              - http://localhost:4200
-            MaxAge: 3000
-          CorsRule:
+          - CorsRule:
+              AllowedHeaders: 
+                - "*"
+              AllowedMethods: 
+                - PUT
+                - POST
+              AllowedOrigins: 
+                - http://localhost:4200
+              MaxAge: 3000
+          - CorsRule:
             AllowedHeaders: 
               - "*"
             AllowedMethods: 
