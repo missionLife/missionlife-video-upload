@@ -68,8 +68,6 @@ Resources:
         Timeout: 300
         Environment:
           Variables:
-            AWS_ACCESS_KEY_ID: {{{AWS_ACCESS_KEY_ID}}}
-            AWS_SECRET_ACCESS_KEY: {{{AWS_SECRET_ACCESS_KEY}}}
             GOOGLE_CLIENT_ID: {{{GOOGLE_CLIENT_ID}}}
             GOOGLE_CLIENT_SECRET: {{{GOOGLE_CLIENT_SECRET}}}
         Events:
