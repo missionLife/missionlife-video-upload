@@ -2,6 +2,7 @@ import url from 'url';
 import http from 'http';
 const open = require('open');
 const destroyer = require('server-destroy');
+import fetch from 'node-fetch';
 
 const KEYS = {
     "client_id": process.env.GOOGLE_CLIENT_ID,
@@ -84,8 +85,8 @@ export default class GoogleAuthClient {
             })
             .listen(3000, () => {
                 // open the browser to the authorize url to start the workflow
-                console.log('The Authorization URL or Code: ', this.authorizeUrl);
-                open(this.authorizeUrl, {wait: false}).then(cp => cp.unref());
+                console.log('The Authorization URL or Code 2: ', this.authorizeUrl);
+                fetch(this.authorizeUrl).then(res => res.json()).then(res => console.log('got here: res', res));
             });
             console.log('destroying the server');
     //   destroyer(server);
