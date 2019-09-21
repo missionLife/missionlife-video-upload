@@ -64,7 +64,7 @@ Resources:
         Handler: index.handler
         MemorySize: 256
         Role: !GetAtt YoutubeUploadLambdaRole.Arn
-        Runtime: nodejs8.10
+        Runtime: python2.7
         Timeout: 300
         Environment:
           Variables:
