@@ -64,10 +64,12 @@ Resources:
         Handler: youtube-upload.handler
         MemorySize: 256
         Role: !GetAtt YoutubeUploadLambdaRole.Arn
-        Runtime: python2.7
+        Runtime: python3.7
         Timeout: 300
         Environment:
           Variables:
+            AWS_ACCESS_KEY_ID: {{{AWS_ACCESS_KEY_ID}}}
+            AWS_SECRET_ACCESS_KEY: {{{AWS_SECRET_ACCESS_KEY}}}
             GOOGLE_CLIENT_ID: {{{GOOGLE_CLIENT_ID}}}
             GOOGLE_CLIENT_SECRET: {{{GOOGLE_CLIENT_SECRET}}}
         Events:

@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+set -e # Exit on any child process error
+
+echo "Running Python Build"
+pushd dist/cjs
+
+echo "Installing Python Virtual Environment"
+pip install virtualenv
+
+echo "Creating Python Virtual Environment"
+python3 -m venv env
+
+echo "Activating Python Virtual Environment"
+source env/bin/activate
+
+echo "Installing Python Dependencies"
+pip install -r requirements.txt
+
+zip -q -r ../youtube-upload.zip .

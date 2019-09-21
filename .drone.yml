@@ -9,7 +9,20 @@ pipeline:
   build:
     image: meltwaterfoundation/drone-serverless:1.41.1
     commands:
-      - npm run build
+      - ./scripts/build
+    secrets:
+      - aws_access_key_id
+      - aws_secret_access_key
+      - google_client_id
+      - google_client_secret
+    when:
+      event: [ push ]
+      branch: [ master ]
+
+  build-python:
+    image: meltwaterfoundation/drone-boto3
+    commands:
+      - ./scripts/build-python
     secrets:
       - aws_access_key_id
       - aws_secret_access_key

@@ -5,6 +5,7 @@
   "main": "src/index.js",
   "scripts": {
     "build": "scripts/build",
+    "build-python": "scripts/build-python",
     "clean": "rm -rf coverage/ dist/",
     "deploy": "scripts/deploy",
     "postinstall": "if [ -z \"$npm_config_production\" ]; then npm outdated; exit 0; fi",
