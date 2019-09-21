@@ -10,12 +10,12 @@ import json
 def configure_s3():
     return boto3.client(
         's3',
-        aws_access_key_id='AKIATSRTY4JEBH22DE63',
-        aws_secret_access_key='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')
+        aws_access_key_id=os.environ.get('AWS_ACCESS_KEY_ID'),
+        aws_secret_access_key=os.environ.get('AWS_SECRET_ACCESS_KEY'))
 
 
 def configure_youtube():
-    cred = GoogleCredentials(None, '516539232105-tmrsqt0nmulkv0esv5rm0tcs7qi2crop.apps.googleusercontent.com', 'bJinCKtxvlPTuhvIpKcz8KQK',
+    cred = GoogleCredentials(None, os.environ.get('GOOGLE_CLIENT_ID'), os.environ.get('GOOGLE_CLIENT_SECRET'),
                                             '1/v0GHMXngPNROfKHUwyqrvuwyMuhkix_5RIyFF2Sflwo', None, "https://accounts.google.com/o/oauth2/token", '')
     http = cred.authorize(httplib2.Http())
     cred.refresh(http)
