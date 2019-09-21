@@ -88,7 +88,7 @@ async function consume(event, context) {
     console.log('called open')
     server.addPage("/oauth2callback", lien => {
         console.log("Trying to get the token using the following code: " + lien.query.code);
-        this.oAuth2Client.getToken(lien.query.code, (err, tokens) => {
+        this.oAuth2Client.getToken(lien.query.code, async (err, tokens) => {
      
             if (err) {
                 lien.lien(err, 400);
