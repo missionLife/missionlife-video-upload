@@ -16,4 +16,4 @@ source env/bin/activate
 echo "Installing Python Dependencies"
 pip install -r requirements.txt
 
-zip -q -r ../youtube-upload.zip .
+popd

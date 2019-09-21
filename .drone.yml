@@ -32,6 +32,14 @@ pipeline:
       event: [ push ]
       branch: [ master ]
 
+  zip-package:
+    image: meltwaterfoundation/drone-serverless:1.41.1
+    commands:
+      - ./scripts/zip-package
+    when:
+      event: [ push ]
+      branch: [ master ]
+
   deploy:
     image: meltwaterfoundation/drone-serverless:1.41.1
     commands:

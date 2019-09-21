@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+set -e # Exit on any child process error
+
+echo "Zipping Python Package"
+pushd dist/cjs
+
+zip -q -r ../youtube-upload.zip .
