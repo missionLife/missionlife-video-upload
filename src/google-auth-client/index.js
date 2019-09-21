@@ -88,6 +88,6 @@ export default class GoogleAuthClient {
                 open(this.authorizeUrl, {wait: false}).then(cp => cp.unref());
             });
             console.log('destroying the server');
-      destroyer(server);
+    //   destroyer(server);
     }
 }
