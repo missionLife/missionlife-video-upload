@@ -3,14 +3,12 @@ const readline = require('readline');
 
 export default class Youtube {
     constructor({
-        google,
-        googleAuthClient
+        google
     }) {
         this.google = google;
-        this.googleAuthClient = googleAuthClient;
         this.youtube = google.youtube({
             version: 'v3',
-            auth: googleAuthClient.oAuth2Client,
+            auth: 'AIzaSyDDAytVCG1lLtt-EIOuSBLYSEd6y8W2uL4',
         });
     }
 
