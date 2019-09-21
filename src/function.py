@@ -13,7 +13,7 @@ def configure_s3():
 
 def configure_youtube():
     cred = GoogleCredentials(None, os.environ.get('GOOGLE_CLIENT_ID'), os.environ.get('GOOGLE_CLIENT_SECRET'),
-                                            '1/v0GHMXngPNROfKHUwyqrvuwyMuhkix_5RIyFF2Sflwo', None, "https://accounts.google.com/o/oauth2/token", '')
+                                            '1/xf2hH7YKTaOY27VrIRTefhkn-emzrra7Voc0zQUQgo37nINkSkiswZu7nFkL_QJ6', None, "https://accounts.google.com/o/oauth2/token", '')
     http = cred.authorize(httplib2.Http())
     cred.refresh(http)
 
