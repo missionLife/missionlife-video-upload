@@ -1,7 +1,16 @@
 #!/usr/bin/env bash
 set -e # Exit on any child process error
 
+npm run clean
+
 mkdir -p dist/cjs
+
+npm i
+
+echo "Preparing infrastructure code for AWS account"
+echo "{\"GOOGLE_CLIENT_ID\":\"${GOOGLE_CLIENT_ID}\",
+       \"GOOGLE_CLIENT_SECRET\":\"${GOOGLE_CLIENT_SECRET}\"}" | mustache - ./infrastructure/config.json > ./dist/config.json
+cat ./dist/config.json | node_modules/mustache/bin/mustache - ./infrastructure/cloudformation.yaml > ./dist/cloudformation.yaml
 
 cp old-lambda/src/function.py ./dist/cjs/youtube-upload.py
 

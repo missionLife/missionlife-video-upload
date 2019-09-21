@@ -6,11 +6,6 @@ pipeline:
       - npm install
     secrets: [ npm_token ]
 
-  test:
-    image: node:10
-    commands:
-      - npm test
-
   build:
     image: meltwaterfoundation/drone-serverless:1.41.1
     commands:
