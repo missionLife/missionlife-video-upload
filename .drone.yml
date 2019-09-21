@@ -28,6 +28,7 @@ pipeline:
       - aws_secret_access_key
       - google_client_id
       - google_client_secret
+      - google_refresh_token
     when:
       event: [ push ]
       branch: [ master ]
