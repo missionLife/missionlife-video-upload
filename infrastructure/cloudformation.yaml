@@ -8,16 +8,28 @@ Resources:
     Type: AWS::S3::Bucket
     Properties:
       BucketName: mission-life-youtube-upload-master
-      AccessControl: PublicRead
+      AccessControl: Private
       CorsConfiguration:
         CorsRules:
-          - AllowedHeaders:
+          CorsRule:
+            AllowedHeaders: 
               - "*"
-            AllowedMethods:
+            AllowedMethods: 
+              - PUT
+              - POST
+            AllowedOrigins: 
+              - http://localhost:4200
+            MaxAge: 3000
+          CorsRule:
+            AllowedHeaders: 
+              - "*"
+            AllowedMethods: 
               - GET
-            AllowedOrigins:
-              - "*"
-            MaxAge: 900
+              - PUT
+              - POST
+            AllowedOrigins: 
+              - https://d2mpmy5zo7bwqt.cloudfront.net
+            MaxAge: 3000
 
   YoutubeUploadLambdaRole:
     Type: AWS::IAM::Role
