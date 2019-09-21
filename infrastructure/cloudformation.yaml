@@ -61,7 +61,7 @@ Resources:
       Properties:
         CodeUri: ../dist/youtube-upload.zip
         FunctionName: YoutubeUploadLambda
-        Handler: index.handler
+        Handler: youtube-upload.handler
         MemorySize: 256
         Role: !GetAtt YoutubeUploadLambdaRole.Arn
         Runtime: python2.7
