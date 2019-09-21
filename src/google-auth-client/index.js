@@ -1,32 +1,6 @@
-import url from 'url';
-import http from 'http';
-const open = require('open');
-const destroyer = require('server-destroy');
-import fetch from 'node-fetch';
 
-const KEYS = {
-    "client_id": process.env.GOOGLE_CLIENT_ID,
-    "project_id": "video-messaging",
-    "auth_uri": "https://accounts.google.com/o/oauth2/auth",
-    "token_uri": "https://oauth2.googleapis.com/token",
-    "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
-    "client_secret": process.env.GOOGLE_CLIENT_SECRET,
-    "javascript_origins": ["http://localhost:3000"],
-    "redirect_uris": ['http://localhost:3000/oauth2callback'],
-};
-const INVALID_REDIRECT_URI = `The provided keyfile does not define a valid
-redirect URI. There must be at least one redirect URI defined, and this sample
-assumes it redirects to 'http://localhost:3000/oauth2callback'.  Please edit
-your keyfile, and add a 'redirect_uris' section.  For example:
-"redirect_uris": [
-  "http://localhost:3000/oauth2callback"
-]
-`;
 
-const GOOGLE_AUTH_CLIENT_SCOPE = [
-    'https://www.googleapis.com/auth/youtube.upload',
-    'https://www.googleapis.com/auth/youtube.readonly'
-];
+
 export default class GoogleAuthClient {
     constructor({ google }) {
         this.google = google;
@@ -63,34 +37,27 @@ export default class GoogleAuthClient {
     }
 
     async authenticate() {
-        http
-            .createServer(async (req, res) => {
-                try {
-                    if (req.url.indexOf('/oauth2callback') > -1) {
-                    // acquire the code from the querystring, and close the web server.
-                    const qs = new url.URL(req.url, 'http://localhost:3000')
-                        .searchParams;
-                    const code = qs.get('code');
-                    console.log(`Code is ${code}`);
-                    res.end('Authentication successful! Please return to the console.');
-                    server.destroy();
+        const server = new Lien({
+            host: 'localhost', 
+            port: 3000
+        });
         
-                    // Now that we have the code, use that to acquire tokens.
-                    const r = await oAuth2Client.getToken(code);
-                    // Make sure to set the credentials on the OAuth2 client.
-                    oAuth2Client.setCredentials(r.tokens);
-                    console.info('Tokens acquired.');
-                    resolve(oAuth2Client);
-                    }
-                } catch (e) {
-                    reject(e);
+        server.addPage("/oauth2callback", lien => {
+            console.log("Trying to get the token using the following code: " + lien.query.code);
+            this.oAuth2Client.getToken(lien.query.code, (err, tokens) => {
+         
+                if (err) {
+                    lien.lien(err, 400);
+                    return console.log(err);
                 }
-            })
-            .listen(3000, () => {
-                // open the browser to the authorize url to start the workflow
-                console.log('The Authorization URL or Code 2: ', this.authorizeUrl);
-                return fetch(this.authorizeUrl).then(res => res.text()).then(res => console.log('got here: res', res));
+         
+                console.log("Got the tokens.");
+         
+                this.oAuth2Client.setCredentials(tokens);
+         
+                lien.end("The video is being uploaded. Check out the logs in the terminal.");
             });
+        });        
     }
     
 }
