@@ -1,4 +1,7 @@
 import url from 'url';
+const open = require('open');
+const destroyer = require('server-destroy');
+
 const KEYS = {
     "client_id": process.env.GOOGLE_CLIENT_ID,
     "project_id": "video-messaging",
@@ -55,5 +58,35 @@ export default class GoogleAuthClient {
             'response_type':'code'
         });
         console.log('The Authorization URL or Code: ', this.authorizeUrl);
+        const server = http
+            .createServer(async (req, res) => {
+                try {
+                    if (req.url.indexOf('/oauth2callback') > -1) {
+                    // acquire the code from the querystring, and close the web server.
+                    const qs = new url.URL(req.url, 'http://localhost:3000')
+                        .searchParams;
+                    const code = qs.get('code');
+                    console.log(`Code is ${code}`);
+                    res.end('Authentication successful! Please return to the console.');
+                    server.destroy();
+        
+                    // Now that we have the code, use that to acquire tokens.
+                    const r = await oAuth2Client.getToken(code);
+                    // Make sure to set the credentials on the OAuth2 client.
+                    oAuth2Client.setCredentials(r.tokens);
+                    console.info('Tokens acquired.');
+                    resolve(oAuth2Client);
+                    }
+                } catch (e) {
+                    reject(e);
+                }
+            })
+            .listen(3000, () => {
+                // open the browser to the authorize url to start the workflow
+                console.log('The Authorization URL or Code: ', this.authorizeUrl);
+                open(this.authorizeUrl, {wait: false}).then(cp => cp.unref());
+            });
+            console.log('destroying the server');
+      destroyer(server);
     }
 }
