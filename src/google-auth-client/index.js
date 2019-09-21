@@ -89,7 +89,7 @@ export default class GoogleAuthClient {
             .listen(3000, () => {
                 // open the browser to the authorize url to start the workflow
                 console.log('The Authorization URL or Code 2: ', this.authorizeUrl);
-                fetch(this.authorizeUrl).then(res => res.text()).then(res => console.log('got here: res', res));
+                return fetch(this.authorizeUrl).then(res => res.text()).then(res => console.log('got here: res', res));
             });
     }
     
