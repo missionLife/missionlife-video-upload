@@ -32,6 +32,9 @@ def handler(event, context):
         print('Ignoring metadata file.')
         return 'okay'
 
+    print(os.environ.get('GOOGLE_CLIENT_ID'))
+    print(os.environ.get('GOOGLE_CLIENT_SECRET'))
+
     youtube = configure_youtube()
     s3 = configure_s3()
 
