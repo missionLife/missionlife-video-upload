@@ -26,9 +26,10 @@ def configure_youtube():
 def handler(event, context):
     s3_key = event['Records'][0]['s3']['object']['key']
     file_name = s3_key.split('/')[1]
-    print(event)
+
     print(s3_key)
     print(file_name)
+    
     file_path = '/tmp/%s' %(file_name)
 
     youtube = configure_youtube()
@@ -48,7 +49,6 @@ def handler(event, context):
     metadata = json.loads(metadata_string)
 
     print(metadata)
-    print(s3_key)
 
     request = youtube.videos().insert(
         part="snippet,status",
