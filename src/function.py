@@ -42,8 +42,9 @@ def handler(event, context):
     metadata_response = s3.get_object(Bucket='mission-life-youtube-upload-master', Key=s3_key)
     
     print(metadata_response)
+    print(metadata_response.Metadata)
 
-    metadata = metadata_response.Metadata
+    metadata = metadata_response.Metadata['person-metadata']
 
     print(metadata)
     print(s3_key)
