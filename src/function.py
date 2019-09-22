@@ -25,6 +25,8 @@ def configure_youtube():
 
 def handler(event, context):
     s3_key = event['Records'][0]['s3']['object']['key']
+    print(event)
+    print(s3_key)
     file_path = '/tmp/%s' %(s3_key)
     meta_file_path = file_path + '.json'
 
