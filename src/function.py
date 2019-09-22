@@ -32,9 +32,6 @@ def handler(event, context):
         print('Ignoring metadata file.')
         return 'okay'
 
-    print(os.environ.get('GOOGLE_CLIENT_ID'))
-    print(os.environ.get('GOOGLE_CLIENT_SECRET'))
-
     youtube = configure_youtube()
     s3 = configure_s3()
 
@@ -42,12 +39,8 @@ def handler(event, context):
     s3.download_file('mission-life-youtube-upload-master', s3_key, file_path)
 
     # download the metadata file
-    s3.download_file('mission-life-youtube-upload-master', s3_key + '.json', meta_file_path)
-
-    # read the metadata file
-    with open(meta_file_path, 'r') as f:
-        metadata = json.load(f)
-
+    metadata = s3.get_object(Bucket='mission-life-youtube-upload-master', Key=s3_key)
+    
     print(metadata)
     print(s3_key)
 
