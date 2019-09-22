@@ -1,3 +1,3 @@
 # Mission Life
 
-A Lambda
+A Python Lambda
