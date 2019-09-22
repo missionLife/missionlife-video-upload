@@ -39,8 +39,12 @@ def handler(event, context):
     s3.download_file('mission-life-youtube-upload-master', s3_key, file_path)
 
     # download the metadata file
-    metadata = s3.get_object(Bucket='mission-life-youtube-upload-master', Key=s3_key)
+    metadata_response = s3.get_object(Bucket='mission-life-youtube-upload-master', Key=s3_key)
     
+    print(metadata_response)
+
+    metadata = metadata_response.Metadata
+
     print(metadata)
     print(s3_key)
 
