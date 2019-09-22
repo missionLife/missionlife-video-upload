@@ -46,8 +46,8 @@ def handler(event, context):
 
     metadata_string = metadata_response['Metadata']['person-metadata']
 
-    metadata = json.load(metadata_string)
-    
+    metadata = json.loads(metadata_string)
+
     print(metadata)
     print(s3_key)
 
