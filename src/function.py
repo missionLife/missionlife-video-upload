@@ -36,10 +36,10 @@ def handler(event, context):
     s3 = configure_s3()
 
     # download the video file
-    s3.download_file('mission-life-youtube-upload-master', s3_key, file_path)
+    s3.download_file('mission-life-youtube-data-api-upload', s3_key, file_path)
 
     # download the metadata file
-    metadata_response = s3.get_object(Bucket='mission-life-youtube-upload-master', Key=s3_key)
+    metadata_response = s3.get_object(Bucket='mission-life-youtube-data-api-upload', Key=s3_key)
     
     print(metadata_response)
     print(metadata_response['Metadata'])
