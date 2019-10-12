@@ -2,19 +2,19 @@
 set -e # Exit on any child process error
 
 export AWS_DEFAULT_REGION=us-east-2
-export STACK_NAME=youtube-upload-v1
+export STACK_NAME=youtube-data-api-upload-v1
 
 echo "Current Building Environment is: $DRONE_BRANCH"
 
 #Find or Create S3 bucket
 echo "Setting up S3 bucket"
-(aws s3api get-bucket-location --bucket youtube-upload-bucket-$DRONE_BRANCH --region ${AWS_DEFAULT_REGION} || aws s3 mb s3://youtube-upload-bucket-$DRONE_BRANCH --region ${AWS_DEFAULT_REGION})
+(aws s3api get-bucket-location --bucket youtube-data-api-upload-bucket-$DRONE_BRANCH --region ${AWS_DEFAULT_REGION} || aws s3 mb s3://youtube-data-api-upload-bucket-$DRONE_BRANCH --region ${AWS_DEFAULT_REGION})
 
 # cloudformation.yaml package
 echo "Packaging artifacts"
 aws cloudformation package \
  --template-file "./dist/cloudformation.yaml" \
- --s3-bucket youtube-upload-bucket-$DRONE_BRANCH \
+ --s3-bucket youtube-data-api-upload-bucket-$DRONE_BRANCH \
  --output-template packaged-sam.yaml \
  --region ${AWS_DEFAULT_REGION}
 

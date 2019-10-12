@@ -7,7 +7,7 @@ Resources:
   YoutubeUploadBucket:
     Type: AWS::S3::Bucket
     Properties:
-      BucketName: mission-life-youtube-upload-master
+      BucketName: mission-life-youtube-data-api-upload
       AccessControl: PublicRead
       CorsConfiguration:
         CorsRules:
