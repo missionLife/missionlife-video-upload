@@ -19,7 +19,7 @@ Resources:
               - POST
             AllowedOrigins:
               - "http://localhost:4200"
-              - "https://d2mpmy5zo7bwqt.cloudfront.net"
+              - "https://d1s3z7p9p47ieq.cloudfront.net/"
             MaxAge: 900
 
   YoutubeUploadLambdaRole:
