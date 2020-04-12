@@ -10,7 +10,8 @@ npm i -g mustache
 echo "Preparing infrastructure code for AWS account"
 echo "{\"GOOGLE_CLIENT_ID\":\"${GOOGLE_CLIENT_ID}\",
        \"GOOGLE_CLIENT_SECRET\":\"${GOOGLE_CLIENT_SECRET}\",
-       \"GOOGLE_REFRESH_TOKEN\":\"${GOOGLE_REFRESH_TOKEN}\"}" | mustache - ./infrastructure/config.json > ./dist/config.json
+       \"GOOGLE_REFRESH_TOKEN\":\"${GOOGLE_REFRESH_TOKEN}\", | mustache - ./infrastructure/config.json > ./dist/config.json
+       \"SLACK_API_TOKEN\":\"${SLACK_API_TOKEN}\"}" | mustache - ./infrastructure/config.json > ./dist/config.json
 cat ./dist/config.json | mustache - ./infrastructure/cloudformation.yaml > ./dist/cloudformation.yaml
 
 echo "Copying Code to Dist"

@@ -6,7 +6,28 @@ from googleapiclient.http import MediaFileUpload
 import boto3
 import os
 import json
-import slack
+import requests
+
+
+class SlackBot:
+    def __init__(self, app_id, secret_id, token):
+        """
+        Get an "incoming-webhook" URL from your slack account.
+        @see https://api.slack.com/incoming-webhooks
+        eg: https://hooks.slack.com/services/<app_id>/<secret_id>/<token>
+        """
+        self._url = "https://hooks.slack.com/services/%s/%s/%s" % (
+            app_id,
+            secret_id,
+            token,
+        )
+
+    def slack_it(self, msg):
+        """ Send a message to a predefined slack channel."""
+        headers = {"content-type": "application/json"}
+        data = '{"text":"%s"}' % msg
+        resp = requests.post(self._url, data=data, headers=headers)
+        return "Message Sent" if resp.status_code == 200 else "Failed to send message"
 
 def configure_s3():
     return boto3.client('s3')
@@ -69,12 +90,12 @@ def handler(event, context):
 
     response = request.execute()
 
-    client = slack.WebClient(token=os.environ['SLACK_API_TOKEN'])
-
-    response = client.chat_postMessage(
-        channel='#new_video_uploads',
-        text="Hello world!")
-    assert response["ok"]
+    app_id = "TDTDXKYDR"
+    secret_id = "B011KHTSP54"
+    token = os.environ.get('SLACK_API_TOKEN')
+    
+    slack = SlackBot(app_id, secret_id, token)
+    slack.slack_it("Hello")
 
     # delete the temp file
     os.remove(file_path)
