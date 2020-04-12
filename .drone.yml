@@ -16,6 +16,7 @@ pipeline:
       - google_client_id
       - google_client_secret
       - google_refresh_token
+      - slack_api_token
     when:
       event: [ push ]
       branch: [ master ]
