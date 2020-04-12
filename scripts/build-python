@@ -4,6 +4,9 @@ set -e # Exit on any child process error
 echo "Running Python Build"
 pushd dist/cjs
 
+echo "Upgrading Pip"
+pip install --upgrade pip
+
 echo "Installing Python Virtual Environment"
 pip3 install virtualenv
 
