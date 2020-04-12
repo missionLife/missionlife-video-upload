@@ -6,7 +6,7 @@ from googleapiclient.http import MediaFileUpload
 import boto3
 import os
 import json
-from slackclient import SlackClient
+import slack
 
 def configure_s3():
     return boto3.client('s3')
@@ -69,14 +69,12 @@ def handler(event, context):
 
     response = request.execute()
 
-    slack_token = os.environ["SLACK_API_TOKEN"]
-    sc = SlackClient(slack_token)
+    client = slack.WebClient(token=os.environ['SLACK_API_TOKEN'])
 
-    sc.api_call(
-      "chat.postMessage",
-      channel="#new_video_uploads",
-      text="Hello World!"
-    )
+    response = client.chat_postMessage(
+        channel='#new_video_uploads',
+        text="Hello world!")
+    assert response["ok"]
 
     # delete the temp file
     os.remove(file_path)
