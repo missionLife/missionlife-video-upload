@@ -102,9 +102,11 @@ def handler(event, context):
         translations at https://studio.youtube.com/channel/UCIqwpPyebBzHb0fgVPmtzpA/videos/upload
         """ % (metadata['supporter'], metadata['upload'], metadata['sponsorship'], metadata['partner'])
 
+    print('Slack Message: %s' %(slack_message))
+
     res = slack.slack_it(slack_message)
 
-    print('Slack response: %s', %(res))
+    print('Slack response: %s' %(res))
 
     # delete the temp file
     os.remove(file_path)
