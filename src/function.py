@@ -24,10 +24,11 @@ class SlackBot:
 
     def slack_it(self, msg):
         """ Send a message to a predefined slack channel."""
-        print(msg)
+        print("THE URL - %s" %(self._url))
         headers = {"content-type": "application/json"}
         data = '{"text":"%s"}' % msg
         resp = requests.post(self._url, data=data, headers=headers)
+        print("The response code - %s" %(resp.status_code))
         return "Message Sent" if resp.status_code == 200 else "Failed to send message"
 
 def configure_s3():
