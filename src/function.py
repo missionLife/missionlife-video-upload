@@ -24,6 +24,7 @@ class SlackBot:
 
     def slack_it(self, msg):
         """ Send a message to a predefined slack channel."""
+        print(msg)
         headers = {"content-type": "application/json"}
         data = '{"text":"%s"}' % msg
         resp = requests.post(self._url, data=data, headers=headers)
@@ -95,7 +96,7 @@ def handler(event, context):
     token = os.environ.get('SLACK_API_TOKEN')
     
     slack = SlackBot(app_id, secret_id, token)
-    slack.slack_it("Hello")
+    slack.slack_it("Hello test")
 
     # delete the temp file
     os.remove(file_path)
