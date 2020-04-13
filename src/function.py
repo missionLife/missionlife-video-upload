@@ -28,7 +28,6 @@ class SlackBot:
         headers = {"content-type": "application/json"}
         data = '{"text":"%s"}' % msg
         resp = requests.post(self._url, data=data, headers=headers)
-        print("The response code - %s" %(resp.status_code))
         return "Message Sent" if resp.status_code == 200 else "Failed to send message"
 
 def configure_s3():
@@ -80,7 +79,7 @@ def handler(event, context):
             "snippet": {
                 "categoryId": "22",
                 "description": 'Message from %s' % (metadata['supporter']),
-                "title": 'Message from %s' % (metadata['supporter']),
+                "title": 'Message from %s_%s' % (metadata['supporter'], metadata['upload']),
                 "tags": [metadata['sponsorship'], metadata['partner']]
             },
             "status": {
@@ -97,7 +96,15 @@ def handler(event, context):
     token = os.environ.get('SLACK_API_TOKEN')
     
     slack = SlackBot(app_id, secret_id, token)
-    slack.slack_it("Hello test")
+    slack_message = """
+        @here A new video titled 'Message from %s_%s' was just uploaded to Youtube for
+        Sponsorship: %s - Partner: %s. Please login to Youtube Studio to update 
+        translations at https://studio.youtube.com/channel/UCIqwpPyebBzHb0fgVPmtzpA/videos/upload
+        """ % (metadata['supporter'], metadata['upload'], metadata['sponsorship'], metadata['partner'])
+
+    res = slack.slack_it(slack_message)
+
+    print('Slack response: %s', %(res))
 
     # delete the temp file
     os.remove(file_path)
