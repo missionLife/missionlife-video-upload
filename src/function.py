@@ -97,7 +97,7 @@ def handler(event, context):
     
     slack = SlackBot(app_id, secret_id, token)
     slack_message = """
-    <!channel> A new video titled 'Message from %s_%s' was just uploaded to Youtube for Sponsorship: %s - Partner: %s. Please login to Youtube Studio to update translations at https://studio.youtube.com/channel/UCIqwpPyebBzHb0fgVPmtzpA/videos/upload
+    <!channel> A new video titled *'Message from %s_%s'* was just uploaded to Youtube for *Sponsorship: %s* - *Partner: %s*. \nPlease login to Youtube Studio to update translations at https://studio.youtube.com/channel/UCIqwpPyebBzHb0fgVPmtzpA/videos/upload
     """ % (metadata['supporter'], metadata['upload'], metadata['sponsorship'], metadata['partner'])
 
     print('Slack Message: %s' %(slack_message))
