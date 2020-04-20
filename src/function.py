@@ -83,7 +83,7 @@ def handler(event, context):
                 "tags": [metadata['sponsorship'], metadata['partner']]
             },
             "status": {
-                "privacyStatus": "private"
+                "privacyStatus": "unlisted"
             }
         },
         media_body=MediaFileUpload(file_path)
