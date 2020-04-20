@@ -73,13 +73,17 @@ def handler(event, context):
 
     print(metadata)
 
+    VIDEO MSG - [PARTNER] - [SPONSORSHIP NAME] - [DATE] - [SPONSOR NAME] 
+
+    date = metadata['upload'][0 : 10]
+
     request = youtube.videos().insert(
         part="snippet,status",
         body={
             "snippet": {
                 "categoryId": "22",
                 "description": 'Message from %s' % (metadata['supporter']),
-                "title": 'Message from %s_%s' % (metadata['supporter'], metadata['upload']),
+                "title": 'VIDEO MSG - %s - %s - %s - %s' % (metadata['partner'], metadata['sponsorship'], date, metadata['supporter']),
                 "tags": [metadata['sponsorship'], metadata['partner']]
             },
             "status": {
