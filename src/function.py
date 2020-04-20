@@ -73,8 +73,6 @@ def handler(event, context):
 
     print(metadata)
 
-    VIDEO MSG - [PARTNER] - [SPONSORSHIP NAME] - [DATE] - [SPONSOR NAME] 
-
     date = metadata['upload'][0 : 10]
 
     request = youtube.videos().insert(
