@@ -46,6 +46,17 @@ def configure_youtube():
     return googleapiclient.discovery.build(
         api_service_name, api_version, credentials=cred, cache_discovery=False)
 
+def get_content_ownwer_id(id):
+    print('Printing Foundation Name: %s' %(id))
+    switcher={
+        'Exodo Foundation':'UCAqceSEsBuj12sgmhm4V_Wg',
+        'Africa Hope Initiative':'UCF-f1iCKVO78vMhW8XXxX1g',
+        'Fundacion Formavida':'UCIqwpPyebBzHb0fgVPmtzpA',
+        'Mision Emanuel':'UCMGaesRqkxw12XpmHeqk2iw'
+    }
+    return switcher.get(id,"UC7myIy6bDvluGDQerm90qIw")
+
+
 def handler(event, context):
     s3_key = event['Records'][0]['s3']['object']['key']
     file_name = s3_key.split('/')[1]
@@ -70,6 +81,11 @@ def handler(event, context):
     metadata_string = metadata_response['Metadata']['person-metadata']
 
     metadata = json.loads(metadata_string)
+
+    partner = metadata['partner']
+    content_owner_id = get_content_ownwer_id(partner)
+
+    print('Content Owner ID: %s' %(content_owner_id))
 
     print(metadata)
 
