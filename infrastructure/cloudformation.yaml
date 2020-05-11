@@ -50,15 +50,16 @@ Resources:
             Action:
             - s3:*
             Resource: "*"
-      - PolicyName: tracing
+      - PolicyName: sqs
         PolicyDocument:
           Version: '2012-10-17'
           Statement:
           - Effect: Allow
             Action:
-            - xray:PutTraceSegments
-            - xray:PutTelemetryRecords
-            Resource: "*"
+            - sqs:*
+            Resource: 
+              - {{{MISSION_LIFE_SPONSORSHIP_UPLOAD_LIMIT_QUEUE_ARN}}}
+              - {{{MISSION_LIFE_SPONSORSHIP_UPLOAD_LIMIT_DEAD_LETTER_QUEUE_ARN}}}
   YoutubeUploadLambda:
       Type: AWS::Serverless::Function
       Properties:

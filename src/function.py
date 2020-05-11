@@ -29,6 +29,12 @@ class SlackBot:
         data = '{"text":"%s"}' % msg
         resp = requests.post(self._url, data=data, headers=headers)
         return "Message Sent" if resp.status_code == 200 else "Failed to send message"
+def configure_sqs():
+    # Get the service resource
+    sqs = boto3.resource('sqs')
+
+    # Get the queue. This returns an SQS.Queue instance
+    return sqs.get_queue_by_name(QueueName='MissionLifeSponsorshipUploadLimitQueue')
 
 def configure_s3():
     return boto3.client('s3')
@@ -108,6 +114,16 @@ def handler(event, context):
     )
 
     response = request.execute()
+
+    queue = configure_sqs()
+
+    sqs_message = json.dumps({
+        "supporterEmail": metadata['supporterEmail'],
+        "sponsorshipId": metadata['sponsorshipId']
+    })
+
+    # Create a new message
+    sqs_response = queue.send_message(MessageBody=sqs_message)
 
     app_id = "TDTDXKYDR"
     secret_id = "B011KHTSP54"
