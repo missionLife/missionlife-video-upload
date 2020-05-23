@@ -29,6 +29,7 @@ class SlackBot:
         data = '{"text":"%s"}' % msg
         resp = requests.post(self._url, data=data, headers=headers)
         return "Message Sent" if resp.status_code == 200 else "Failed to send message"
+        
 def configure_sqs():
     # Get the service resource
     sqs = boto3.resource('sqs')
@@ -131,7 +132,7 @@ def handler(event, context):
     
     slack = SlackBot(app_id, secret_id, token)
     slack_message = """
-    <!channel> A new video titled *'Message from %s_%s'* was just uploaded to Youtube for *Sponsorship: %s* - *Partner: %s*. \nPlease login to Youtube Studio to update translations at https://studio.youtube.com/channel/UCIqwpPyebBzHb0fgVPmtzpA/videos/upload
+    <!channel> A new video titled *'Message from %s_%s'* was just uploaded to Youtube for *Sponsorship: %s* - *Partner: %s*. \nPlease login to Youtube Studio to update translations at https://studio.youtube.com/channel/UC7myIy6bDvluGDQerm90qIw/translations
     """ % (metadata['supporter'], metadata['upload'], metadata['sponsorship'], metadata['partner'])
 
     print('Slack Message: %s' %(slack_message))
