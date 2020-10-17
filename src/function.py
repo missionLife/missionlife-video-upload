@@ -104,7 +104,7 @@ def handler(event, context):
             "snippet": {
                 "categoryId": "22",
                 "description": 'Message from %s' % (metadata['supporter']),
-                "title": 'VIDEO MSG - %s - %s - %s - %s' % (metadata['partner'], metadata['sponsorship'], date, metadata['supporter']),
+                "title": 'VIDEO MSG - %s - %s - %s - %s' % (metadata['partner'], metadata['sponsorship'], date, metadata['supporter'])[0 : 100],
                 "tags": [metadata['sponsorship'], metadata['partner']]
             },
             "status": {
