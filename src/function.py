@@ -97,6 +97,7 @@ def handler(event, context):
     print(metadata)
 
     date = metadata['upload'][0 : 10]
+    title = 'VIDEO MSG - %s - %s - %s - %s' % (metadata['partner'], metadata['sponsorship'], date, metadata['supporter'])
 
     request = youtube.videos().insert(
         part="snippet,status",
@@ -104,7 +105,7 @@ def handler(event, context):
             "snippet": {
                 "categoryId": "22",
                 "description": 'Message from %s' % (metadata['supporter']),
-                "title": 'VIDEO MSG - %s - %s - %s - %s' % (metadata['partner'], metadata['sponsorship'], date, metadata['supporter'])[0 : 100],
+                "title": title[0 : 100],
                 "tags": [metadata['sponsorship'], metadata['partner']]
             },
             "status": {
