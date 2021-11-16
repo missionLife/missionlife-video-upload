@@ -32,7 +32,7 @@
     "mustache": "3.0.2"
   },
   "dependencies": {
-    "aws-sdk": "2.528.0",
+    "aws-sdk": "2.814.0",
     "bluebird": "3.5.5",
     "googleapis": "43.0.0",
     "lien": "3.3.0",
